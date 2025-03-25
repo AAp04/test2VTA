@@ -1,0 +1,226 @@
+﻿:root {
+    /* Color Palette */
+    --primary-color: #f8d7da;
+    --secondary-color: #dbc8c8;
+    --background-color: #f4f4f4;
+    --text-primary: #212529;
+    --text-secondary: #495057;
+    --white: #ffffff;
+    --accent-color: #007bff;
+    /* Typography */
+    --font-family: 'Inter', Arial, sans-serif;
+    --font-size-base: 16px;
+    --font-size-small: 14px;
+    --font-size-large: 18px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--background-color);
+    color: var(--text-primary);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navigation Styles */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+}
+
+    .navbar-brand i {
+        margin-right: 0.5rem;
+        font-size: 1.25rem;
+    }
+
+/* Profile Dropdown */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    background: var(--white);
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+}
+
+    .profile-dropdown-toggle i {
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+    }
+
+/* Content Styles */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+.content {
+    flex: 1;
+    padding: 1rem 0;
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+    .welcome-message .alert {
+        background-color: var(--primary-color);
+        border: none;
+        color: var(--text-primary);
+    }
+
+/* Card Styles */
+.card {
+    background-color: var(--white);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+/* Button Styles */
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: var(--white);
+    border: none;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    border: none;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Footer Styles */
+footer {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
+}
+
+/* Chat Styles */
+.chat-box {
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 1rem;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.message {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+    .message .text {
+        max-width: 80%;
+        padding: 0.75rem;
+        border-radius: 8px;
+        background-color: var(--primary-color);
+    }
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 0.5rem;
+    }
+
+    .navbar {
+        flex-direction: column;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+}
+
+/* Accessibility Enhancements */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Form Input Styles */
+.form-control {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Sidebar Styles */
+.sidebar {
+    background-color: var(--primary-color);
+    padding: 1rem;
+    border-radius: 8px;
+}
+
+    .sidebar ul {
+        list-style: none;
+    }
+
+        .sidebar ul li {
+            padding: 0.5rem 0;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .sidebar ul li:hover {
+                background-color: rgba(255,255,255,0.1);
+            }

@@ -1,0 +1,353 @@
+-- Stored Procedure to Get Account by ID
+CREATE OR REPLACE FUNCTION get_account_by_id(p_account_id INT)
+RETURNS TABLE(accountid INT, accountname VARCHAR, accountpassword VARCHAR, firstname VARCHAR, lastname VARCHAR, email VARCHAR) 
+LANGUAGE plpgsql 
+AS $$
+BEGIN
+    RETURN QUERY 
+    SELECT * FROM account WHERE accountid = p_account_id;
+END;
+$$;
+
+
+-- Stored Procedure to Insert into Account
+CREATE OR REPLACE FUNCTION insert_account(p_account_name VARCHAR, p_account_password VARCHAR, p_first_name VARCHAR, p_last_name VARCHAR, p_email VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO account (AccountName, AccountPassword, FirstName, LastName, Email)
+    VALUES (p_account_name, p_account_password, p_first_name, p_last_name, p_email);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Update Account
+CREATE OR REPLACE FUNCTION update_account(p_account_id INT, p_account_name VARCHAR, p_account_password VARCHAR, p_first_name VARCHAR, p_last_name VARCHAR, p_email VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+    UPDATE account SET AccountName = p_account_name, AccountPassword = p_account_password, FirstName = p_first_name, LastName = p_last_name, Email = p_email
+    WHERE AccountID = p_account_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Account
+CREATE OR REPLACE FUNCTION delete_account(p_account_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM account WHERE accountid = p_account_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Professor by ID
+CREATE OR REPLACE FUNCTION get_professor_by_id(p_professor_id INT)
+RETURNS TABLE(professorid INT, accountid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM professor WHERE professorid = p_professor_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Professor
+CREATE OR REPLACE FUNCTION insert_professor(p_account_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO professor (accountid)
+    VALUES (p_account_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Professor
+CREATE OR REPLACE FUNCTION delete_professor(p_professor_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM professor WHERE professorid = p_professor_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Student by ID
+CREATE OR REPLACE FUNCTION get_student_by_id(p_student_id INT)
+RETURNS TABLE(studentid INT, studentyear VARCHAR, accountid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM student WHERE studentid = p_student_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Student
+CREATE OR REPLACE FUNCTION insert_student(p_student_year VARCHAR, p_account_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO student (studentyear, accountid)
+    VALUES (p_student_year, p_account_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Student
+CREATE OR REPLACE FUNCTION delete_student(p_student_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM student WHERE studentid = p_student_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Course by ID
+CREATE OR REPLACE FUNCTION get_course_by_id(p_course_id INT)
+RETURNS TABLE(courseid INT, coursetitle VARCHAR, subject VARCHAR, semester VARCHAR, year INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM courses WHERE courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Courses
+CREATE OR REPLACE FUNCTION insert_course(p_course_title VARCHAR, p_subject VARCHAR, p_semester VARCHAR, p_year INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO courses (coursetitle, subject, semester, year)
+    VALUES (p_course_title, p_subject, p_semester, p_year);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Course
+CREATE OR REPLACE FUNCTION delete_course(p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM courses WHERE courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Request by ID
+CREATE OR REPLACE FUNCTION get_request_by_id(p_request_id INT)
+RETURNS TABLE(requestid INT, courseid INT, requestbody TEXT, requesttype VARCHAR, datecreated TIMESTAMP, requeststatus BOOLEAN, chatid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM requests WHERE requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Requests
+CREATE OR REPLACE FUNCTION insert_request(p_course_id INT, p_request_body TEXT, p_request_type VARCHAR, p_request_status BOOLEAN, p_chat_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO requests (courseid, requestbody, requesttype, requeststatus, chatid)
+    VALUES (p_course_id, p_request_body, p_request_type, p_request_status, p_chat_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Request
+CREATE OR REPLACE FUNCTION delete_request(p_request_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM requests WHERE requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Request History by ID
+CREATE OR REPLACE FUNCTION get_request_history_by_id(p_request_id INT)
+RETURNS TABLE(requestid INT, response TEXT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM request_history WHERE requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Request History
+CREATE OR REPLACE FUNCTION insert_request_history(p_request_id INT, p_response TEXT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO request_history (requestid, response)
+    VALUES (p_request_id, p_response);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Request History
+CREATE OR REPLACE FUNCTION delete_request_history(p_request_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM request_history WHERE requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get File by ID
+CREATE OR REPLACE FUNCTION get_file_by_id(p_file_id INT)
+RETURNS TABLE(fileid INT, courseid INT, filelink TEXT, fileassignmentcategory VARCHAR) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM files WHERE fileid = p_file_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Files
+CREATE OR REPLACE FUNCTION insert_file(p_course_id INT, p_file_link TEXT, p_file_assignment_category VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO files (courseid, filelink, fileassignmentcategory)
+    VALUES (p_course_id, p_file_link, p_file_assignment_category);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete File
+CREATE OR REPLACE FUNCTION delete_file(p_file_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM files WHERE fileid = p_file_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Course File by ID
+CREATE OR REPLACE FUNCTION get_course_file_by_id(p_file_id INT)
+RETURNS TABLE(fileid INT, courseid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM course_files WHERE fileid = p_file_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Course Files
+CREATE OR REPLACE FUNCTION insert_course_file(p_file_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO course_files (fileid, courseid)
+    VALUES (p_file_id, p_course_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Course File
+CREATE OR REPLACE FUNCTION delete_course_file(p_file_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM course_files WHERE fileid = p_file_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Student Request by ID
+CREATE OR REPLACE FUNCTION get_student_request_by_id(p_student_id INT, p_request_id INT)
+RETURNS TABLE(studentid INT, requestid INT, prioritylevel VARCHAR) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM student_request WHERE studentid = p_student_id AND RequestID = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Student Request
+CREATE OR REPLACE FUNCTION insert_student_request(p_student_id INT, p_request_id INT, p_priority_level VARCHAR)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO student_request (studentid, requestid, prioritylevel)
+    VALUES (p_student_id, p_request_id, p_priority_level);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Student Request
+CREATE OR REPLACE FUNCTION delete_student_request(p_student_id INT, p_request_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM student_request WHERE studentid = p_student_id AND requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Professor Course by ID
+CREATE OR REPLACE FUNCTION get_professor_course_by_id(p_professor_id INT, p_course_id INT)
+RETURNS TABLE(professorid INT, courseid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM professor_course WHERE professorid = p_professor_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Professor Course
+CREATE OR REPLACE FUNCTION insert_professor_course(p_professor_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO professor_course (professorid, courseid)
+    VALUES (p_professor_id, p_course_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Professor Course
+CREATE OR REPLACE FUNCTION delete_professor_course(p_professor_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM professor_course WHERE professorid = p_professor_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get Student Course by ID
+CREATE OR REPLACE FUNCTION get_student_course_by_id(p_student_id INT, p_course_id INT)
+RETURNS TABLE(studentid INT, courseid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM student_course WHERE studentid = p_student_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into Student Course
+CREATE OR REPLACE FUNCTION insert_student_course(p_student_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO student_course (studentid, courseid)
+    VALUES (p_student_id, p_course_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete Student Course
+CREATE OR REPLACE FUNCTION delete_student_course(p_student_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM student_course WHERE studentid = p_student_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Get TA Course by ID
+CREATE OR REPLACE FUNCTION get_ta_course_by_id(p_ta_id INT, p_course_id INT)
+RETURNS TABLE(taid INT, courseid INT) AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM ta_course WHERE taid = p_ta_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Insert into TA Course
+CREATE OR REPLACE FUNCTION insert_ta_course(p_ta_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    INSERT INTO ta_course (taid, courseid)
+    VALUES (p_ta_id, p_course_id);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Delete TA Course
+CREATE OR REPLACE FUNCTION delete_ta_course(p_ta_id INT, p_course_id INT)
+RETURNS VOID AS $$
+BEGIN
+    DELETE FROM ta_course WHERE taid = p_ta_id AND courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Update Course
+CREATE OR REPLACE FUNCTION update_course(p_course_id INT, p_course_title VARCHAR, p_subject VARCHAR, p_semester VARCHAR, p_year INT)
+RETURNS VOID AS $$ 
+BEGIN
+    UPDATE courses 
+    SET coursetitle = p_course_title, subject = p_subject, semester = p_semester, year = p_year
+    WHERE courseid = p_course_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Update Request
+CREATE OR REPLACE FUNCTION update_request(p_request_id INT, p_course_id INT, p_request_body TEXT, p_request_type VARCHAR, p_request_status BOOLEAN, p_chat_id INT)
+RETURNS VOID AS $$ 
+BEGIN
+    UPDATE requests 
+    SET courseid = p_course_id, requestbody = p_request_body, requesttype = p_request_type, requeststatus = p_request_status, chatid = p_chat_id
+    WHERE requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Update File
+CREATE OR REPLACE FUNCTION update_file(p_file_id INT, p_course_id INT, p_file_link TEXT, p_file_assignment_category VARCHAR)
+RETURNS VOID AS $$ 
+BEGIN
+    UPDATE files 
+    SET courseid = p_course_id, filelink = p_file_link, fileassignmentcategory = p_file_assignment_category
+    WHERE fileid = p_file_id;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Stored Procedure to Update Student Request Priority Level
+CREATE OR REPLACE FUNCTION update_student_request_priority(p_student_id INT, p_request_id INT, p_priority_level VARCHAR)
+RETURNS VOID AS $$ 
+BEGIN
+    UPDATE student_request 
+    SET prioritylevel = p_priority_level
+    WHERE studentid = p_student_id AND requestid = p_request_id;
+END;
+$$ LANGUAGE plpgsql;
+
